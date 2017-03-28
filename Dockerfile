@@ -8,7 +8,7 @@
 
 FROM alpine:3.5
 
-MAINTAINER Leila Hadj-Chikh <lhadjchikh@gmail.com>
+MAINTAINER Leila Hadj-Chikh <leila.hadj-chikh@dunbarsecured.com>
 
 
 ### DOWNLOAD DATABASES
