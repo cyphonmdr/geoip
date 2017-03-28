@@ -38,7 +38,7 @@ COPY GeoIP.conf /usr/etc/GeoIP.conf
 
 # install geoipupdate
 RUN BUILD_DEPS='gcc make libc-dev libtool automake autoconf git' \
- && apk-install curl-dev ${BUILD_DEPS} \
+ && apk --no-cache add curl-dev ${BUILD_DEPS} \
  && git clone https://github.com/maxmind/geoipupdate /tmp/geoipupdate \
  && cd /tmp/geoipupdate \
  && ./bootstrap \
