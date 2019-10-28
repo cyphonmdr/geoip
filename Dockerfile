@@ -17,6 +17,7 @@ ENV GEOIP_BASE_URL      http://geolite.maxmind.com/download/geoip/database
 ENV GEOIP_CNTR_DB       GeoLite2-Country.mmdb
 ENV GEOIP_CITY_DB       GeoLite2-City.mmdb
 ENV GEOIP_DB_DIR        /usr/share/GeoIP
+ENV GEOIPUPDATE_VER     "4.0.6"
 
 # download gzip database files to /tmp/
 ADD ${GEOIP_BASE_URL}/${GEOIP_CNTR_DB}.gz /tmp/
@@ -39,16 +40,20 @@ COPY GeoIP.conf /usr/etc/GeoIP.conf
 # install geoipupdate
 RUN BUILD_DEPS='gcc make libc-dev libtool automake autoconf git' \
  && apk --no-cache add curl-dev ${BUILD_DEPS} \
- && git clone https://github.com/maxmind/geoipupdate /tmp/geoipupdate \
- && cd /tmp/geoipupdate \
- && ./bootstrap \
- && ./configure --prefix=/usr \
- && make \
- && make install \
- && cd \
+ && wget -O /tmp/geoipupdate.tgz https://github.com/maxmind/geoipupdate/releases/download/v${GEOIPUPDATE_VER}/geoipupdate_${GEOIPUPDATE_VER}_linux_amd64.tar.gz \
+ && tar -zxpvf /tmp/geoipupdate.tgz -C /opt/ \
+ && cp /opt/geoipupdate_${GEOIPUPDATE_VER}_linux_amd64/geoipupdate /usr/bin/geoipupdate
+ # && git clone https://github.com/maxmind/geoipupdate /tmp/geoipupdate \
+ # && cd /tmp/geoipupdate \
+ # && ./bootstrap \
+ # && ./configure --prefix=/usr \
+ # && make \
+ # && make install \
+ # && cd \
  && apk del --purge ${BUILD_DEPS} \
  && rm -rf /var/cache/apk/* \
- && rm -rf /tmp/geoipupdate
+ && rm -rf /tmp/geoipupdate.tgz \
+ && rm -rf /opt/geoipupdate_${GEOIPUPDATE_VER}_linux_amd64
 
 
 ### CONFIGURE AUTOMATIC UPDATES
