@@ -42,7 +42,7 @@ RUN BUILD_DEPS='gcc make libc-dev libtool automake autoconf git' \
  && apk --no-cache add curl-dev ${BUILD_DEPS} \
  && wget -O /tmp/geoipupdate.tgz https://github.com/maxmind/geoipupdate/releases/download/v${GEOIPUPDATE_VER}/geoipupdate_${GEOIPUPDATE_VER}_linux_amd64.tar.gz \
  && tar -zxpvf /tmp/geoipupdate.tgz -C /opt/ \
- && cp /opt/geoipupdate_${GEOIPUPDATE_VER}_linux_amd64/geoipupdate /usr/bin/geoipupdate
+ && cp /opt/geoipupdate_${GEOIPUPDATE_VER}_linux_amd64/geoipupdate /usr/bin/geoipupdate \
  # && git clone https://github.com/maxmind/geoipupdate /tmp/geoipupdate \
  # && cd /tmp/geoipupdate \
  # && ./bootstrap \
