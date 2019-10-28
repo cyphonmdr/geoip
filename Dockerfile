@@ -6,9 +6,9 @@
 # tkrs/maxmind-geoipupdate by Takeru Sato.
 ############################################################
 
-FROM alpine:3.5
+FROM alpine
 
-MAINTAINER Leila Hadj-Chikh <leila.hadj-chikh@dunbarsecured.com>
+MAINTAINER Tom Callahan <tcallahan@controlscan.com>
 
 
 ### DOWNLOAD DATABASES
@@ -40,21 +40,17 @@ COPY GeoIP.conf /usr/etc/GeoIP.conf
 # install geoipupdate
 RUN BUILD_DEPS='gcc make libc-dev libtool automake autoconf git' \
  && apk --no-cache add curl-dev ${BUILD_DEPS} \
+ && apk update \
+ && apk add ca-certificates \
+ && update-ca-certificates \
+ && apk add openssl \
  && wget -O /tmp/geoipupdate.tgz https://github.com/maxmind/geoipupdate/releases/download/v${GEOIPUPDATE_VER}/geoipupdate_${GEOIPUPDATE_VER}_linux_amd64.tar.gz \
  && tar -zxpvf /tmp/geoipupdate.tgz -C /opt/ \
  && cp /opt/geoipupdate_${GEOIPUPDATE_VER}_linux_amd64/geoipupdate /usr/bin/geoipupdate \
- # && git clone https://github.com/maxmind/geoipupdate /tmp/geoipupdate \
- # && cd /tmp/geoipupdate \
- # && ./bootstrap \
- # && ./configure --prefix=/usr \
- # && make \
- # && make install \
- # && cd \
  && apk del --purge ${BUILD_DEPS} \
  && rm -rf /var/cache/apk/* \
  && rm -rf /tmp/geoipupdate.tgz \
  && rm -rf /opt/geoipupdate_${GEOIPUPDATE_VER}_linux_amd64
-
 
 ### CONFIGURE AUTOMATIC UPDATES
 
