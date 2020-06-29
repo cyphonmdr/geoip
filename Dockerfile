@@ -14,7 +14,7 @@ MAINTAINER Tom Callahan <tcallahan@controlscan.com>
 ### DOWNLOAD DATABASES
 
 ENV GEOIP_BASE_URL      https://download.db-ip.com/free
-ENV GEOIP_CNTR_DB       dbip-country-lite-2020-04.mmdb
+ENV GEOIP_CNTR_DB       dbip-country-lite-2020-06.mmdb
 ENV GEOIP_CITY_DB       dbip-city-lite-2020-04.mmdb
 ENV GEOIP_DB_DIR        /usr/share/GeoIP
 ENV GEOIPUPDATE_VER     "4.0.6"
